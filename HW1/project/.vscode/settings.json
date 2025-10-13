@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "task.hpp": "c",
+        "tim.h": "c",
+        "cmath": "cpp"
+    }
+}
