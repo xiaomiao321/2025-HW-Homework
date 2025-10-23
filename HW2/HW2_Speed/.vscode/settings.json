@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "cstdint": "cpp",
+        "compare": "cpp",
+        "cstdlib": "cpp",
+        "bit": "c",
+        "limits": "c",
+        "new": "c",
+        "stm32f4xx_hal_def.h": "c",
+        "cmath": "cpp"
+    }
+}
