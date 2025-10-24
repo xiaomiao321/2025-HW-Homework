@@ -39,14 +39,13 @@ void CanFilter_Init(CAN_HandleTypeDef *hcan)
   canfilter.SlaveStartFilterBank = 14; // CAN2 start filter bank
   canfilter.FilterBank = 0;
   canfilter.FilterFIFOAssignment = CAN_RX_FIFO0;
-  canfilter.FilterMode = CAN_FILTERMODE_IDLIST;
-  canfilter.FilterScale = CAN_FILTERSCALE_16BIT;
+  canfilter.FilterMode = CAN_FILTERMODE_IDMASK; // Accept all IDs
+  canfilter.FilterScale = CAN_FILTERSCALE_32BIT; // Use 32-bit scale for accepting all
 
-  // ID=0x201
-  canfilter.FilterIdHigh = (0x201) << 5;
-  canfilter.FilterIdLow = 0;
-  canfilter.FilterMaskIdHigh = 0;
-  canfilter.FilterMaskIdLow = 0;
+  canfilter.FilterIdHigh = 0x0000; // Match any ID
+  canfilter.FilterIdLow = 0x0000;
+  canfilter.FilterMaskIdHigh = 0x0000; // Don't care about any bits
+  canfilter.FilterMaskIdLow = 0x0000;
 
   if (HAL_CAN_ConfigFilter(hcan, &canfilter) != HAL_OK)
   {
@@ -65,12 +64,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
   CAN_RxHeaderTypeDef rx_header;
   uint8_t rx_data[8];
   HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
-
-  if (rx_header.StdId == motor1.receive_can_id)
-  {
-    motor1.CAN_RxCpltCallback(rx_data);
-  }
-
+  motor1.CAN_RxCpltCallback(rx_data);
   HAL_CAN_ActivateNotification(
     hcan, CAN_IT_RX_FIFO0_MSG_PENDING); // 再次使能FIFO0接收中断
 }

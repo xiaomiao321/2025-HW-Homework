@@ -16,18 +16,18 @@ void Class_Motor_GM6020::Init(CAN_HandleTypeDef *hcan,
     // 根据接收ID判断发送ID和电机索引
     if (this->receive_can_id >= 0x201 && this->receive_can_id <= 0x204)
     {
-        this->send_can_id = 0x1FF;// 电压控制
+        this->send_can_id = 0x1FE;// 电流控制
         this->motor_index = this->receive_can_id - 0x201;
     }
     else if (this->receive_can_id >= 0x205 && this->receive_can_id <= 0x208)
     {
-        this->send_can_id = 0x2FF;
+        this->send_can_id = 0x2FE;
         this->motor_index = this->receive_can_id - 0x205;
     }
 
     // 初始化 PID 参数
-    PID_Angle.Init(0.001f, 8.0f, 0.1f, 0.0f, 50.0f, 300.0f);  // 角度环
-    PID_Omega.Init(0.001f, 1.0f, 0.0f, 0.0f, 30000.0f, 30000.0f); // 速度环
+    PID_Angle.Init(0.001f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);  // 角度环
+    PID_Omega.Init(0.001f, 250.0f, 20.0f, 0.0f, 0.0f, 0.0f); // 速度环
 
     // 清零输出
     output = 0;
@@ -119,4 +119,6 @@ void Class_Motor_GM6020::SendOutput()
 
     uint32_t tx_mailbox;
     HAL_CAN_AddTxMessage(hcan, &tx_header, tx_data, &tx_mailbox);
+
+
 }

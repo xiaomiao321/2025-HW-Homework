@@ -17,6 +17,7 @@
 Class_Motor_GM6020 motor1;
 // 全局角速度变量，方便监控
 float g_now_omega = 0.0f;
+float g_target_omega = 0.0f;
 
 // 串口绘图对象
 Class_Serialplot serial_plot;
@@ -72,29 +73,27 @@ void MainTask(void)
   float time_s = HAL_GetTick() / 1000.0f;
 
   // 定义正弦曲线参数
-  const float amplitude = 15.0f; // 振幅
+  const float amplitude = 10.0f; // 振幅
   const float frequency = 0.5f;  // 频率
 
   // 计算目标速度 (rad/s)
-  float target_omega = amplitude * sin(2.0f * M_PI * frequency * time_s);
-
-  // 设置目标速度
-  motor1.Set_Target_Omega(target_omega);
+  g_target_omega = amplitude * sin(2.0f * M_PI * frequency * time_s);
+  motor1.Set_Target_Omega(g_target_omega);
 
   // 执行PID计算和CAN发送
   motor1.TIM_PID_PeriodElapsedCallback();
   g_now_omega = motor1.Get_Now_Omega();
 
   // 每10ms发送一次数据
-  if (task_count % 10 == 0)
-  {
-    // 设置发送数据
-    serial_plot.Set_Data(2, &target_omega, &g_now_omega);
-    // 准备发送数据
-    serial_plot.TIM_Add_PeriodElapsedCallback();
-    // 发送数据
-    UART_Send_Data(&huart6, UART3_Tx_Data, 1 + 4 * 2);
-  }
+  // if (task_count % 10 == 0)
+  // {
+  //   // 设置发送数据
+  //   serial_plot.Set_Data(2, &target_omega, &g_now_omega);
+  //   // 准备发送数据
+  //   serial_plot.TIM_Add_PeriodElapsedCallback();
+  //   // 发送数据
+  //   UART_Send_Data(&huart6, UART6_Tx_Data, 1 + 4 * 2);
+  // }
   task_count++;
 }
 

@@ -13,6 +13,12 @@
         "type_traits": "cpp",
         "gpio.h": "c",
         "main.h": "c",
-        "drv_uart.h": "c"
+        "drv_uart.h": "c",
+        "dma.h": "c",
+        "usart.h": "c",
+        "task.hpp": "c",
+        "dvc_serialplot.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "tim.h": "c"
     }
 }
