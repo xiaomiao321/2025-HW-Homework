@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "drv_can.h": "c",
+        "dma.h": "c"
+    }
+}

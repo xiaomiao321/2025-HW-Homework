@@ -13,4 +13,11 @@ void MainTask(void);
 #ifdef __cplusplus
 }
 #endif
+
+#ifdef __cplusplus
+#include "dvc_serialplot.h"
+extern Class_Serialplot serial_plot;
+void Uart_Callback(uint8_t *Buffer, uint16_t Length);
+#endif
+
 #endif // !__TASK_HPP__

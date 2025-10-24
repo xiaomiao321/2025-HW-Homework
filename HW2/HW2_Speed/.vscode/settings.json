@@ -7,6 +7,12 @@
         "limits": "c",
         "new": "c",
         "stm32f4xx_hal_def.h": "c",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "typeinfo": "c",
+        "can.h": "c",
+        "type_traits": "cpp",
+        "gpio.h": "c",
+        "main.h": "c",
+        "drv_uart.h": "c"
     }
 }

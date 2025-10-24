@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "can.h"
 #include "pid.hpp"
-#include <cmath> // For M_PI
+#include <cmath> 
 
 void Class_Motor_GM6020::Init(CAN_HandleTypeDef *hcan,
     uint32_t receive_can_id,
@@ -16,7 +16,7 @@ void Class_Motor_GM6020::Init(CAN_HandleTypeDef *hcan,
     // 根据接收ID判断发送ID和电机索引
     if (this->receive_can_id >= 0x201 && this->receive_can_id <= 0x204)
     {
-        this->send_can_id = 0x1FF;
+        this->send_can_id = 0x1FF;// 电压控制
         this->motor_index = this->receive_can_id - 0x201;
     }
     else if (this->receive_can_id >= 0x205 && this->receive_can_id <= 0x208)
@@ -111,7 +111,7 @@ void Class_Motor_GM6020::SendOutput()
     tx_data[this->motor_index * 2 + 1] = output & 0xFF;
 
     CAN_TxHeaderTypeDef tx_header;
-    tx_header.StdId = this->send_can_id;
+    tx_header.StdId = this->send_can_id; // 使用正确的发送ID
     tx_header.RTR = CAN_RTR_DATA;
     tx_header.IDE = CAN_ID_STD;
     tx_header.DLC = 8;

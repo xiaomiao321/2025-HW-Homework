@@ -7,6 +7,8 @@
         "limits": "c",
         "new": "c",
         "stm32f4xx_hal_def.h": "c",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "gpio.h": "c",
+        "can.h": "c"
     }
 }
